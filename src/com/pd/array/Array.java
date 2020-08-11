@@ -1,4 +1,4 @@
-package com.pd;
+package com.pd.array;
 
 /**
  * @author dpeng

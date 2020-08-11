@@ -214,3 +214,11 @@ Insert
 ​		At the Beginning   O(1)
 
 ​		In the Middle   O(n)  因为查找到节点是O(n)  更新节点是O(1)
+
+DELETE
+
+​		From the Beginning   O(1)
+
+​		From the End.             O(n)
+
+​		From the Middle.       O(n.)
