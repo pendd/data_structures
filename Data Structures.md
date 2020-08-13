@@ -125,10 +125,15 @@ public void greet(String[] names) {
 
 ## Arrays
 
-- **Lookup by Index  O(1)**
-- **Lookup by Value  O(n)**
-- **Insert                      O(n)**
-- **Delete                     O(n)**
+**Lookup by Index  O(1)**
+
+**Lookup by Value  O(n)**
+
+**Insert                      O(n)**
+
+**Delete                     O(n)**
+
+### 自己实现数组
 
 ```java
 public class Array {
@@ -223,7 +228,7 @@ DELETE
 
 ​		From the Middle.       O(n)
 
-> 自己的
+### 自己的
 
 ```java
 public class Node {
@@ -339,7 +344,7 @@ public class LinkedList {
 
 ```
 
-> 老师的
+### 老师的
 
 ```java
 public class LinkedListTea {
@@ -467,7 +472,7 @@ public class LinkedListTea {
 
 ```
 
-> 面试题1：反转链表
+### 面试题1：反转链表
 
 ```java
 // 反转链表 [10 -> 20 -> 30] => [30 -> 20 -> 10]
@@ -488,7 +493,7 @@ public class LinkedListTea {
     }
 ```
 
-> 面试题2：一次遍历获取倒数第k个节点
+### 面试题2：一次遍历获取倒数第k个节点
 
 ```java
 // 一次遍历获取倒数第k个node
@@ -510,8 +515,6 @@ public class LinkedListTea {
         return previous.value;
     }
 ```
-
-
 
 ### Arrays vs Linked Lists
 
@@ -571,7 +574,7 @@ public class LinkedListTea {
 
   例如：web浏览器中的前进和后退功能
 
-> 面试题1：字符串反转
+### 面试题1：字符串反转
 
 ```java
 public class StackOperation {
@@ -593,7 +596,7 @@ public class StackOperation {
 }
 ```
 
-> 面试题2：匹配符号
+### 面试题2：匹配符号
 
 ```java
 // 我的
@@ -685,7 +688,7 @@ public class StackOperation {
 
 ```
 
-> 数组实现Stack
+### 数组实现Stack
 
 ```java
 public class Stack {
@@ -753,6 +756,8 @@ public class Stack {
 
 **可以使用数组、链表、栈来构建队列**
 
+java中的实现ArrayDeque
+
 **First In First Out (FIFO)**
 
 - enqueue    O(1)
@@ -761,7 +766,7 @@ public class Stack {
 - isEmpty      O(1)
 - isFull           O(1)
 
-> 反转队列
+### 反转队列
 
 ```JAVA
 public static Queue reverse(Queue<Integer> queue) {
@@ -777,7 +782,7 @@ public static Queue reverse(Queue<Integer> queue) {
 }
 ```
 
-> 用数组实现环形队列
+### 用数组实现环形队列
 
 ```java
 public class ArrayQueueForArray {
@@ -832,7 +837,7 @@ public class ArrayQueueForArray {
 }
 ```
 
-> 用栈实现队列
+### 用栈实现队列
 
 ```java
 public class ArrayQueueForStack {
@@ -866,6 +871,100 @@ public class ArrayQueueForStack {
         return input.empty() && output.empty();
     }
 
+}
+```
+
+### 优先级队列
+
+**优先级队列整形默认从小到大存放元素，即使添加的时候是乱序的**
+
+Java中的实现有PriorityQueue
+
+可以使用 Arrays 和 Heap堆来实现
+
+#### 使用数组实现
+
+```java
+package com.pd.queues;
+
+/**
+ * @description:
+ * @author: pd
+ * @date: 2020-08-13 11:01 下午
+ */
+public class PriorityQueue {
+
+  private int[] array;
+  private int size;
+
+  PriorityQueue() {
+    array = new int[5];
+  }
+
+  // 我的，很粗糙，难读
+  public void insert(int element) {
+    if (isFull())
+      throw new RuntimeException("队列已满");
+    if (isEmpty()) {
+      array[size++] = element;
+      return;
+    }
+
+    for (int i = size - 1; i >= 0; i--) {
+      if (array[i] >= element) {
+        array[i + 1] = array[i];
+
+        if (i == 0) {
+          array[0] = element;
+        }
+      }
+      else {
+        array[i + 1] = element;
+        break;
+      }
+    }
+    size ++;
+  }
+
+  public int remove() {
+    if (isEmpty())
+      throw new RuntimeException("队列为空");
+    int result = array[0];
+    for (int i = 0; i < size - 1; i++) {
+      array[i] = array[i + 1];
+    }
+    array[--size] = 0;
+    return result;
+  }
+
+  public boolean isEmpty() {
+    return size == 0;
+  }
+
+  public boolean isFull() {
+    return size == array.length;
+  }
+
+  // 老师的
+  public void add(int item) {
+    if (isFull())
+      throw new RuntimeException("队列已满");
+
+    int i = shiftItemsToInsert(item);
+    array[i] = item;
+    size ++;
+  }
+
+  private int shiftItemsToInsert(int item) {
+    int i;
+    for (i = size -1; i >= 0; i--) {
+      if (array[i] > item)
+        array[i + 1] = array[i];
+      else
+        break;
+    }
+    return i + 1;
+  }
 }
 ```
 
