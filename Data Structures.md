@@ -997,3 +997,34 @@ public static Character getFirstNonRepeated(String str) {
     }
 ```
 
+> 面试题2: 在一个字符串中找到第一个重复的字符
+
+```java
+public static Character findFirstRepeatedChar(String str) {
+        Set<Character> set = new HashSet<>();
+
+        for (char c : str.toCharArray()) {
+            if (set.contains(c))
+                return c;
+
+            set.add(c);
+        }
+        return Character.MIN_VALUE;
+}
+```
+
+> hash 的一种简单实现
+
+```java
+// hash的一种简单实现方式
+    public static int hash(String str) {
+        int hash = 0;
+        
+        for (char ch : str.toCharArray())
+            hash += ch;
+        
+        // 100 表示hash内部数组大小
+        return hash % 100;
+    }
+```
+
