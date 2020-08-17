@@ -968,3 +968,32 @@ public class PriorityQueue {
 }
 ```
 
+## Hash Tables
+
+Lookup   O(1)
+
+Insert      O(1)
+
+Delete     O(1)
+
+> 面试题1：在一个字符串中找到第一个不重复的字符
+
+```java
+public static Character getFirstNonRepeated(String str) {
+        Map<Character, Integer> map = new LinkedHashMap<>();
+        char[] chars = str.toCharArray();
+        for (char c : chars)
+            map.merge(c, 1, Integer::sum);
+
+        // 使用这个必须要使用linkedHashMap
+//        return map.entrySet().stream().filter(m -> m.getValue() == 1).map(Entry::getKey).findFirst().orElse(Character.MIN_VALUE);
+
+    // 可以使用HashMap 乱序  上面的return 和下面这三行等同
+        for (char c : chars)
+            if (map.get(c) == 1) return c;
+
+        return Character.MIN_VALUE;
+
+    }
+```
+
