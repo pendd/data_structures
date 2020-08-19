@@ -31,24 +31,28 @@ public class HashTable {
     entries[index].addLast(new Entry(key, value));
   }
 
-  public String get(int key) {
-    int index = hash(key);
-    LinkedList<Entry> bucket = entries[index];
-
-    if (bucket == null) return null;
-
-    for (Entry entry : bucket) {
-      if (entry.key == key)
-        return entry.value;
+  // 重构 优化
+  public void putUp(int key, String value) {
+    Entry entry = getEntry(key);
+    if (entry != null) {
+      entry.value = value;
+      return;
     }
 
-    return null;
+    getOrCreateBucket(key).add(new Entry(key, value));
   }
 
-  public boolean remove(int key) {
-    getBucket(key).remove(getEntry(key));
+  public String get(int key) {
+    Entry entry = getEntry(key);
+    return entry == null ? null : entry.value;
+  }
 
-    return false;
+  public void remove(int key) {
+    Entry entry = getEntry(key);
+
+    if (entry == null) throw new IllegalStateException();
+
+    getBucket(key).remove(entry);
   }
 
   private Entry getEntry(int key) {
@@ -62,6 +66,15 @@ public class HashTable {
     }
 
     return null;
+  }
+
+  private LinkedList<Entry> getOrCreateBucket(int key) {
+    int index = hash(key);
+    LinkedList<Entry> bucket = entries[index];
+    if (bucket == null)
+      entries[index] = new LinkedList<>();
+
+    return bucket;
   }
 
   private LinkedList<Entry> getBucket(int key) {

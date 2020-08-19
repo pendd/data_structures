@@ -1028,3 +1028,4 @@ public static Character findFirstRepeatedChar(String str) {
     }
 ```
 
+需要回看  整理笔记  碰撞的几种解决方式、 实现hash table的方式
